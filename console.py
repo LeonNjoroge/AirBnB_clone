@@ -37,13 +37,13 @@ class HBNBCommand(cmd.Cmd):
         Gets list that parsed arguments from the string
         """
 
-        list_argm = arg.split(id)
-        nlist_argm = []
+        ls_argm = arg.split(id)
+        nls_argm = []
 
-        for m in list_argm:
+        for m in ls_argm:
             if m != '':
-                nlist_argm.append(m)
-        return nlist_argm
+                nls_argm.append(m)
+        return nls_argm
 
     def do_quit(self, arg):
         """Closes and exits the program"""
@@ -158,15 +158,15 @@ class HBNBCommand(cmd.Cmd):
             not on the class name.
                 Ex: $ all BaseModel or $ all
         """
-        list_argm = HBNBCommand.parse(arg)
-        if len(list_argm) > 0 and list_argm[0] not in HBNBCommand.__class_lst:
+        ls_argm = HBNBCommand.parse(arg)
+        if len(ls_argm) > 0 and ls_argm[0] not in HBNBCommand.__class_lst:
             print("** class doesn't exist **")
         else:
             obj_a = []
             for obj in models.storage.all().values():
-                if len(list_argm) > 0 and list_argm[0] == obj.__class__.__name__:
+                if len(ls_argm) > 0 and ls_argm[0] == obj.__class__.__name__:
                     obj_a.append(obj.__str__())
-                elif len(list_argm) == 0:
+                elif len(ls_argm) == 0:
                     obj_a.append(obj.__str__())
             print(obj_a)
 
@@ -183,45 +183,45 @@ class HBNBCommand(cmd.Cmd):
             Updates an instance based on the class name and id by adding or
             updating attribute (save the change into the JSON file).
         """
-        list_argm = HBNBCommand.parse(arg)
+        ls_argm = HBNBCommand.parse(arg)
         objdict = models.storage.all()
 
-        if len(list_argm) == 0:
+        if len(ls_argm) == 0:
             print("** class name missing **")
             return False
-        if list_argm[0] not in HBNBCommand.__class_lst:
+        if ls_argm[0] not in HBNBCommand.__class_lst:
             print("** class doesn't exist **")
             return False
 
-        if len(list_argm) == 1:
+        if len(ls_argm) == 1:
             print("** instance id missing **")
             return False
-        if "{}.{}".format(list_argm[0], list_argm[1]) not in objdict.keys():
+        if "{}.{}".format(ls_argm[0], ls_argm[1]) not in objdict.keys():
             print("** no instance found **")
             return False
 
-        if len(list_argm) == 2:
+        if len(ls_argm) == 2:
             print("** attribute name missing **")
             return False
-        if len(list_argm) == 3:
+        if len(ls_argm) == 3:
             try:
-                type(eval(list_argm[2])) != dict
+                type(eval(ls_argm[2])) != dict
             except NameError:
                 print("** value missing **")
                 return False
 
-        if len(list_argm) == 4:
-            obj = objdict["{}.{}".format(list_argm[0], list_argm[1])]
+        if len(ls_argm) == 4:
+            obj = objdict["{}.{}".format(ls_argm[0], ls_argm[1])]
 
-            if list_argm[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[list_argm[2]])
-                obj.__dict__[list_argm[2]] = valtype(list_argm[3])
+            if ls_argm[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[ls_argm[2]])
+                obj.__dict__[ls_argm[2]] = valtype(ls_argm[3])
             else:
-                obj.__dict__[list_argm[2]] = list_argm[3]
+                obj.__dict__[ls_argm[2]] = ls_argm[3]
 
-        elif type(eval(list_argm[2])) == dict:
-            obj = objdict["{}.{}".format(list_argm[0], list_argm[1])]
-            for k, v in eval(list_argm[2]).items():
+        elif type(eval(ls_argm[2])) == dict:
+            obj = objdict["{}.{}".format(ls_argm[0], ls_argm[1])]
+            for k, v in eval(ls_argm[2]).items():
                 if (k in obj.__class__.__dict__.keys() and type(
                         obj.__class__.__dict__[k]) in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[k])
@@ -253,19 +253,17 @@ class HBNBCommand(cmd.Cmd):
             Prnits the number of elements inside the FileStorage that
             are of instances of cls
         """
-        list_argm = HBNBCommand.parse(arg)
-        if len(list_argm) > 0 and list_argm[0] not in HBNBCommand.__class_lst:
+        ls_argm = HBNBCommand.parse(arg)
+        if len(ls_argm) > 0 and ls_argm[0] not in HBNBCommand.__class_lst:
             print("** class doesn't exist **")
         else:
             obj_a = []
             for obj in models.storage.all().values():
-                if len(list_argm) > 0 and list_argm[0] == obj.__class__.__name__:
+                if len(ls_argm) > 0 and ls_argm[0] == obj.__class__.__name__:
                     obj_a.append(obj.__str__())
-                elif len(list_argm) == 0:
+                elif len(ls_argm) == 0:
                     obj_a.append(obj.__str__())
             print(len(obj_a))
-
-
 
 if __name__ == "__main__":
     console = HBNBCommand()
