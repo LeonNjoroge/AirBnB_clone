@@ -1,43 +1,45 @@
 #!/usr/bin/python3
-"""Unittest for BaseModel"""
+"""This Unittest for BaseModel"""
 import os
-import time
+from models import storage
 import unittest
 from datetime import datetime
-from models import storage
 from models.user import User
+import time
 
 
 class TestUser(unittest.TestCase):
-    """test BaseModel"""
+    """this test BaseModel"""
 
     def test_ainit(self):
-        """test blank basemodel init"""
-        snapshot = datetime.now()
-        um1 = User()
-        snapshot2 = datetime.now()
 
-        self.assertIsInstance(um1.id, str)
-        self.assertTrue(len(um1.id) > 0)
-        self.assertTrue("User." + um1.id in storage.all().keys())
+        """this test blank basemodel init"""
+        snap = datetime.now()
+        user_a = User()
+        snap2 = datetime.now()
 
-        self.assertIsInstance(um1.created_at, datetime)
-        self.assertLess(um1.created_at, snapshot2)
-        self.assertGreater(um1.created_at, snapshot)
+        self.assertIsInstance(user_a.id, str)
+        self.assertTrue(len(user_a.id) > 0)
+        self.assertTrue("User." + user_a.id in storage.all().keys())
 
-        self.assertIsInstance(um1.updated_at, datetime)
-        self.assertLess(um1.updated_at, snapshot2)
-        self.assertGreater(um1.updated_at, snapshot)
+        self.assertIsInstance(user_a.created_at, datetime)
+        self.assertLess(user_a.created_at, snap2)
+        self.assertGreater(user_a.created_at, snap)
 
-        um1.save()
-        self.assertIsInstance(um1.updated_at, datetime)
-        self.assertGreater(um1.updated_at, snapshot)
-        self.assertGreater(um1.updated_at, snapshot2)
-        del um1
+        self.assertIsInstance(user_a.updated_at, datetime)
+        self.assertLess(user_a.updated_at, snap2)
+        self.assertGreater(user_a.updated_at, snap)
+
+        user_a.save()
+        self.assertIsInstance(user_a.updated_at, datetime)
+        self.assertGreater(user_a.updated_at, snap)
+        self.assertGreater(user_a.updated_at, snap2)
+        del user_a
 
     def test_init_dict(self):
-        """test dict basemodel init"""
-        test_dict = {
+
+        """this tests dict basemodel init"""
+        dict_test = {
             "updated_at": datetime(1963, 11, 22, 12, 30, 00, 716921).isoformat(
                 "T"
             ),
@@ -46,34 +48,37 @@ class TestUser(unittest.TestCase):
                 "T"
             ),
         }
-        um2 = User(**test_dict)
+        user_b = User(**dict_test)
 
-        self.assertIsInstance(um2.id, str)
-        self.assertTrue(len(um2.id) > 0)
-        self.assertTrue(um2.id == test_dict["id"])
+        self.assertIsInstance(user_b.id, str)
+        self.assertTrue(len(user_b.id) > 0)
 
-        self.assertIsInstance(um2.created_at, datetime)
+        self.assertTrue(user_b.id == dict_test["id"])
+
+        self.assertIsInstance(user_b.created_at, datetime)
         self.assertTrue(
-            um2.created_at.isoformat("T") == test_dict["created_at"]
+            user_b.created_at.isoformat("T") == dict_test["created_at"]
         )
-        self.assertIsInstance(um2.updated_at, datetime)
+
+        self.assertIsInstance(user_b.updated_at, datetime)
         self.assertTrue(
-            um2.updated_at.isoformat("T") == test_dict["updated_at"]
+            user_b.updated_at.isoformat("T") == dict_test["updated_at"]
         )
-        um2.save()
-        self.assertGreater(um2.updated_at, um2.created_at)
-        del um2
+
+        user_b.save()
+        self.assertGreater(user_b.updated_at, user_b.created_at)
+        del user_b
 
     def test_attribute(self):
-        """asdad"""
-        um3 = User()
+        """this is another test"""
+        user_c = User()
 
-        self.assertTrue(hasattr(um3, "email"))
-        self.assertTrue(hasattr(um3, "password"))
-        self.assertTrue(hasattr(um3, "first_name"))
-        self.assertTrue(hasattr(um3, "last_name"))
+        self.assertTrue(hasattr(user_c, "email"))
+        self.assertTrue(hasattr(user_c, "last_name"))
+        self.assertTrue(hasattr(user_c, "password"))
+        self.assertTrue(hasattr(user_c, "first_name"))
 
-        self.assertIsInstance(um3.email, str)
-        self.assertIsInstance(um3.password, str)
-        self.assertIsInstance(um3.first_name, str)
-        self.assertIsInstance(um3.last_name, str)
+        self.assertIsInstance(user_c.email, str)
+        self.assertIsInstance(user_c.last_name, str)
+        self.assertIsInstance(user_c.password, str)
+        self.assertIsInstance(user_c.first_name, str)

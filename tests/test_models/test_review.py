@@ -1,43 +1,47 @@
 #!/usr/bin/python3
-"""Unittest for BaseModel"""
+
+"""this is the Unittest for BaseModel"""
+
 import os
+from models.review import Review
 import time
+from models import storage
 import unittest
 from datetime import datetime
-from models import storage
-from models.review import Review
 
 
 class TestReview(unittest.TestCase):
-    """test BaseModel"""
+    """this test BaseModel"""
 
     def test_init(self):
         """test blank basemodel init"""
-        snapshot = datetime.now()
-        rm1 = Review()
-        snapshot2 = datetime.now()
 
-        self.assertIsInstance(rm1.id, str)
-        self.assertTrue(len(rm1.id) > 0)
-        self.assertTrue("Review." + rm1.id in storage.all().keys())
+        snap = datetime.now()
+        review_a = Review()
+        snap2 = datetime.now()
 
-        self.assertIsInstance(rm1.created_at, datetime)
-        self.assertLess(rm1.created_at, snapshot2)
-        self.assertGreater(rm1.created_at, snapshot)
+        self.assertIsInstance(review_a.id, str)
+        self.assertTrue(len(review_a.id) > 0)
+        self.assertTrue("Review." + review_a.id in storage.all().keys())
 
-        self.assertIsInstance(rm1.updated_at, datetime)
-        self.assertLess(rm1.updated_at, snapshot2)
-        self.assertGreater(rm1.updated_at, snapshot)
+        self.assertIsInstance(review_a.created_at, datetime)
+        self.assertLess(review_a.created_at, snap2)
+        self.assertGreater(review_a.created_at, snap)
 
-        rm1.save()
-        self.assertIsInstance(rm1.updated_at, datetime)
-        self.assertGreater(rm1.updated_at, snapshot)
-        self.assertGreater(rm1.updated_at, snapshot2)
-        del rm1
+        self.assertIsInstance(review_a.updated_at, datetime)
+        self.assertLess(review_a.updated_at, snap2)
+        self.assertGreater(review_a.updated_at, snap)
+
+        review_a.save()
+        self.assertIsInstance(review_a.updated_at, datetime)
+        self.assertGreater(review_a.updated_at, snap)
+        self.assertGreater(review_a.updated_at, snap2)
+        del review_a
 
     def test_init_dict(self):
+
         """test dict basemodel init"""
-        test_dict = {
+        dict_test = {
             "updated_at": datetime(1963, 11, 22, 12, 30, 00, 716921).isoformat(
                 "T"
             ),
@@ -46,32 +50,37 @@ class TestReview(unittest.TestCase):
                 "T"
             ),
         }
-        rm2 = Review(**test_dict)
 
-        self.assertIsInstance(rm2.id, str)
-        self.assertTrue(len(rm2.id) > 0)
-        self.assertTrue(rm2.id == test_dict["id"])
+        review_b = Review(**dict_test)
 
-        self.assertIsInstance(rm2.created_at, datetime)
+        self.assertIsInstance(review_b.id, str)
+        self.assertTrue(len(review_b.id) > 0)
+        self.assertTrue(review_b.id == dict_test["id"])
+
+        self.assertIsInstance(review_b.created_at, datetime)
         self.assertTrue(
-            rm2.created_at.isoformat("T") == test_dict["created_at"]
+            review_b.created_at.isoformat("T") == dict_test["created_at"]
         )
-        self.assertIsInstance(rm2.updated_at, datetime)
+
+        self.assertIsInstance(review_b.updated_at, datetime)
         self.assertTrue(
-            rm2.updated_at.isoformat("T") == test_dict["updated_at"]
+            review_b.updated_at.isoformat("T") == dict_test["updated_at"]
         )
-        rm2.save()
-        self.assertGreater(rm2.updated_at, rm2.created_at)
-        del rm2
+
+        review_b.save()
+
+        self.assertGreater(review_b.updated_at, review_b.created_at)
+
+        del review_b
 
     def test_attribute(self):
-        """asdad"""
-        rm3 = Review()
+        """another test"""
+        review_c = Review()
 
-        self.assertTrue(hasattr(rm3, "place_id"))
-        self.assertTrue(hasattr(rm3, "user_id"))
-        self.assertTrue(hasattr(rm3, "text"))
+        self.assertTrue(hasattr(review_c, "place_id"))
+        self.assertTrue(hasattr(review_c, "user_id"))
+        self.assertTrue(hasattr(review_c, "text"))
 
-        self.assertIsInstance(rm3.place_id, str)
-        self.assertIsInstance(rm3.user_id, str)
-        self.assertIsInstance(rm3.text, str)
+        self.assertIsInstance(review_c.place_id, str)
+        self.assertIsInstance(review_c.user_id, str)
+        self.assertIsInstance(review_c.text, str)

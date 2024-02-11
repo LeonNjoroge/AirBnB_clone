@@ -1,43 +1,48 @@
 #!/usr/bin/python3
-"""Unittest for BaseModel"""
+
+""" This is the Unittest for BaseModel"""
+
 import os
+from models import storage
+from models.place import Place
 import time
 import unittest
 from datetime import datetime
-from models import storage
-from models.place import Place
-
 
 class TestPlace(unittest.TestCase):
-    """test BaseModel"""
+    """this tests BaseModel"""
 
     def test_init(self):
-        """test blank basemodel init"""
-        snapshot = datetime.now()
-        pm1 = Place()
-        snapshot2 = datetime.now()
 
-        self.assertIsInstance(pm1.id, str)
-        self.assertTrue(len(pm1.id) > 0)
-        self.assertTrue("Place." + pm1.id in storage.all().keys())
+        """this test blank basemodel init"""
+        snap = datetime.now()
+        place_a = Place()
+        snap2 = datetime.now()
 
-        self.assertIsInstance(pm1.created_at, datetime)
-        self.assertLess(pm1.created_at, snapshot2)
-        self.assertGreater(pm1.created_at, snapshot)
+        self.assertIsInstance(place_a.id, str)
+        self.assertTrue(len(place_a.id) > 0)
+        self.assertTrue("Place." + place_a.id in storage.all().keys())
 
-        self.assertIsInstance(pm1.updated_at, datetime)
-        self.assertLess(pm1.updated_at, snapshot2)
-        self.assertGreater(pm1.updated_at, snapshot)
+        self.assertIsInstance(place_a.created_at, datetime)
+        self.assertLess(place_a.created_at, snap2)
+        self.assertGreater(place_a.created_at, snap)
 
-        pm1.save()
-        self.assertIsInstance(pm1.updated_at, datetime)
-        self.assertGreater(pm1.updated_at, snapshot)
-        self.assertGreater(pm1.updated_at, snapshot2)
-        del pm1
+        self.assertIsInstance(place_a.updated_at, datetime)
+        self.assertLess(place_a.updated_at, snap2)
+        self.assertGreater(place_a.updated_at, snap)
+
+        place_a.save()
+        self.assertIsInstance(place_a.updated_at, datetime)
+        self.assertGreater(place_a.updated_at, snap)
+        self.assertGreater(place_a.updated_at, snap2)
+
+        del place_a
 
     def test_init_dict(self):
-        """test dict basemodel init"""
-        test_dict = {
+
+        """this test dict basemodel init"""
+
+        dict_test = {
             "updated_at": datetime(1963, 11, 22, 12, 30, 00, 716921).isoformat(
                 "T"
             ),
@@ -46,48 +51,51 @@ class TestPlace(unittest.TestCase):
                 "T"
             ),
         }
-        pm2 = Place(**test_dict)
+        place_b = Place(**dict_test)
 
-        self.assertIsInstance(pm2.id, str)
-        self.assertTrue(len(pm2.id) > 0)
-        self.assertTrue(pm2.id == test_dict["id"])
+        self.assertIsInstance(place_b.id, str)
+        self.assertTrue(len(place_b.id) > 0)
+        self.assertTrue(place_b.id == dict_test["id"])
 
-        self.assertIsInstance(pm2.created_at, datetime)
+        self.assertIsInstance(place_b.created_at, datetime)
         self.assertTrue(
-            pm2.created_at.isoformat("T") == test_dict["created_at"]
+            place_b.created_at.isoformat("T") == dict_test["created_at"]
         )
-        self.assertIsInstance(pm2.updated_at, datetime)
+
+        self.assertIsInstance(place_b.updated_at, datetime)
         self.assertTrue(
-            pm2.updated_at.isoformat("T") == test_dict["updated_at"]
+            place_b.updated_at.isoformat("T") == dict_test["updated_at"]
         )
-        pm2.save()
-        self.assertGreater(pm2.updated_at, pm2.created_at)
-        del pm2
+
+        place_b.save()
+        self.assertGreater(place_b.updated_at, place_b.created_at)
+
+        del place_b
 
     def test_attribute(self):
-        """asdad"""
-        pm3 = Place()
+        """another test"""
+        place_c = Place()
 
-        self.assertTrue(hasattr(pm3, "city_id"))
-        self.assertTrue(hasattr(pm3, "user_id"))
-        self.assertTrue(hasattr(pm3, "name"))
-        self.assertTrue(hasattr(pm3, "description"))
-        self.assertTrue(hasattr(pm3, "number_rooms"))
-        self.assertTrue(hasattr(pm3, "number_bathrooms"))
-        self.assertTrue(hasattr(pm3, "max_guest"))
-        self.assertTrue(hasattr(pm3, "price_by_night"))
-        self.assertTrue(hasattr(pm3, "latitude"))
-        self.assertTrue(hasattr(pm3, "longitude"))
-        self.assertTrue(hasattr(pm3, "amenity_ids"))
+        self.assertTrue(hasattr(place_c, "city_id"))
+        self.assertTrue(hasattr(place_c, "user_id"))
+        self.assertTrue(hasattr(place_c, "longitude"))
+        self.assertTrue(hasattr(place_c, "amenity_ids"))
+        self.assertTrue(hasattr(place_c, "name"))
+        self.assertTrue(hasattr(place_c, "description"))
+        self.assertTrue(hasattr(place_c, "number_rooms"))
+        self.assertTrue(hasattr(place_c, "number_bathrooms"))
+        self.assertTrue(hasattr(place_c, "max_guest"))
+        self.assertTrue(hasattr(place_c, "price_by_night"))
+        self.assertTrue(hasattr(place_c, "latitude"))
 
-        self.assertIsInstance(pm3.city_id, str)
-        self.assertIsInstance(pm3.user_id, str)
-        self.assertIsInstance(pm3.name, str)
-        self.assertIsInstance(pm3.description, str)
-        self.assertIsInstance(pm3.number_rooms, int)
-        self.assertIsInstance(pm3.number_bathrooms, int)
-        self.assertIsInstance(pm3.max_guest, int)
-        self.assertIsInstance(pm3.price_by_night, int)
-        self.assertIsInstance(pm3.latitude, float)
-        self.assertIsInstance(pm3.longitude, float)
-        self.assertIsInstance(pm3.amenity_ids, list)
+        self.assertIsInstance(place_c.city_id, str)
+        self.assertIsInstance(place_c.user_id, str)
+        self.assertIsInstance(place_c.name, str)
+        self.assertIsInstance(place_c.longitude, float)
+        self.assertIsInstance(place_c.amenity_ids, list)
+        self.assertIsInstance(place_c.description, str)
+        self.assertIsInstance(place_c.number_rooms, int)
+        self.assertIsInstance(place_c.number_bathrooms, int)
+        self.assertIsInstance(place_c.max_guest, int)
+        self.assertIsInstance(place_c.price_by_night, int)
+        self.assertIsInstance(place_c.latitude, float)

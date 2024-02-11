@@ -1,11 +1,13 @@
 #!/usr/bin/python3
-"""Unittest for BaseModel"""
+
+"""this is a Unittest for BaseModel"""
+
 import os
+from models import storage
 import time
+from models.state import State
 import unittest
 from datetime import datetime
-from models import storage
-from models.state import State
 
 
 class TestState(unittest.TestCase):
@@ -13,31 +15,34 @@ class TestState(unittest.TestCase):
 
     def test_init(self):
         """test blank basemodel init"""
-        snapshot = datetime.now()
-        sm1 = State()
-        snapshot2 = datetime.now()
+        snap = datetime.now()
+        state_a = State()
+        snap2 = datetime.now()
 
-        self.assertIsInstance(sm1.id, str)
-        self.assertTrue(len(sm1.id) > 0)
-        self.assertTrue("State." + sm1.id in storage.all().keys())
+        self.assertIsInstance(state_a.id, str)
+        self.assertTrue(len(state_a.id) > 0)
+        self.assertTrue("State." + state_a.id in storage.all().keys())
 
-        self.assertIsInstance(sm1.created_at, datetime)
-        self.assertLess(sm1.created_at, snapshot2)
-        self.assertGreater(sm1.created_at, snapshot)
+        self.assertIsInstance(state_a.created_at, datetime)
+        self.assertLess(state_a.created_at, snap2)
+        self.assertGreater(state_a.created_at, snap)
 
-        self.assertIsInstance(sm1.updated_at, datetime)
-        self.assertLess(sm1.updated_at, snapshot2)
-        self.assertGreater(sm1.updated_at, snapshot)
+        self.assertIsInstance(state_a.updated_at, datetime)
+        self.assertLess(state_a.updated_at, snap2)
+        self.assertGreater(state_a.updated_at, snap)
 
-        sm1.save()
-        self.assertIsInstance(sm1.updated_at, datetime)
-        self.assertGreater(sm1.updated_at, snapshot)
-        self.assertGreater(sm1.updated_at, snapshot2)
-        del sm1
+        state_a.save()
+        self.assertIsInstance(state_a.updated_at, datetime)
+        self.assertGreater(state_a.updated_at, snap)
+        self.assertGreater(state_a.updated_at, snap2)
+
+        del state_a
 
     def test_init_dict(self):
-        """test dict basemodel init"""
-        test_dict = {
+
+        """this test basemodel init"""
+
+        dict_test = {
             "updated_at": datetime(1963, 11, 22, 12, 30, 00, 716921).isoformat(
                 "T"
             ),
@@ -46,27 +51,32 @@ class TestState(unittest.TestCase):
                 "T"
             ),
         }
-        sm2 = State(**test_dict)
+        state_b = State(**dict_test)
 
-        self.assertIsInstance(sm2.id, str)
-        self.assertTrue(len(sm2.id) > 0)
-        self.assertTrue(sm2.id == test_dict["id"])
+        self.assertIsInstance(state_b.id, str)
+        self.assertTrue(len(state_b.id) > 0)
 
-        self.assertIsInstance(sm2.created_at, datetime)
+        self.assertTrue(state_b.id == dict_test["id"])
+
+        self.assertIsInstance(state_b.created_at, datetime)
         self.assertTrue(
-            sm2.created_at.isoformat("T") == test_dict["created_at"]
+            state_b.created_at.isoformat("T") == dict_test["created_at"]
         )
-        self.assertIsInstance(sm2.updated_at, datetime)
+
+        self.assertIsInstance(state_b.updated_at, datetime)
         self.assertTrue(
-            sm2.updated_at.isoformat("T") == test_dict["updated_at"]
+            state_b.updated_at.isoformat("T") == dict_test["updated_at"]
         )
-        sm2.save()
-        self.assertGreater(sm2.updated_at, sm2.created_at)
-        del sm2
+
+        state_b.save()
+        self.assertGreater(state_b.updated_at, state_b.created_at)
+
+        del state_b
 
     def test_attribute(self):
-        """asdad"""
-        sm3 = State()
+        """this is another test"""
 
-        self.assertTrue(hasattr(sm3, "name"))
-        self.assertIsInstance(sm3.name, str)
+        state_c = State()
+
+        self.assertTrue(hasattr(state_c, "name"))
+        self.assertIsInstance(state_c.name, str)
