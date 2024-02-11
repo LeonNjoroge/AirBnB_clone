@@ -43,12 +43,10 @@ class HBNBCommand(cmd.Cmd):
         for m in list_argm:
             if m != '':
                 nlist_argm.append(m)
-
         return nlist_argm
 
     def do_quit(self, arg):
         """Closes and exits the program"""
-
         return True
 
     def help_quit(self):
