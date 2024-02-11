@@ -18,21 +18,23 @@ class HBNBCommand(cmd.Cmd):
     """A console class for the AirBnB-Clone project"""
 
     prompt: str = '(hbnb)'
+
     __class_lst = {
         BaseModel.__name__: BaseModel,
-        User.__name__: User,
         State.__name__: State,
         City.__name__: City,
+        Review.__name__: Review,
         Place.__name__: Place,
         Amenity.__name__: Amenity,
-        Review.__name__: Review
+        User.__name__: User
     }
+
     __class_funcs = ["all", "count", "show", "destroy", "update"]
 
     @staticmethod
     def parse(arg, id=" "):
         """
-        Returns. alist containg the parsed arguments from the string
+        Gets list that parsed arguments from the string
         """
 
         list_argm = arg.split(id)
@@ -41,10 +43,12 @@ class HBNBCommand(cmd.Cmd):
         for m in list_argm:
             if m != '':
                 nlist_argm.append(m)
+
         return nlist_argm
 
+
     def do_quit(self, arg):
-        """Exits the program"""
+        """Closes and exits the program"""
 
         return True
 
@@ -59,15 +63,16 @@ class HBNBCommand(cmd.Cmd):
         print("")
         return True
 
+
     def do_create(self, arg):
         """
-            Creates a new instance of BaseModel,
-            saves it (to the JSON file) and prints
+            This makes a new instance of BaseModel
+            the saves it to the JSON file and prints
             the id.
-                Ex: $ create BaseModel
         """
 
         lst_argm = HBNBCommand.parse(arg)
+
         if len(lst_argm) == 0:
             print("** class name missing **")
             return False
@@ -85,33 +90,32 @@ class HBNBCommand(cmd.Cmd):
 
     def help_create(self):
         """
-            prints Help info for the create function
+            prints the create function's Help info
         """
         print("""Creats a new instance of the first argument
               stores it in the JSON file and prints its id""")
 
     def do_show(self, arg):
         """
-            Prints the string representation of an instance based
-            on the class name and id.
-                Ex: $ show BaseModel 1234-1234-1234
+            based on the class name and id it
+            Prints the string representation of an instance .
         """
         lst_argm = HBNBCommand.parse(arg)
         db = models.storage.all()
+
         if not len(lst_argm):
             print("** class name missing **")
         elif (lst_argm[0] not in HBNBCommand.__class_lst.keys()):
             print("** class doesn't exist **")
+
         elif len(lst_argm) == 1:
             print("** instance id missing **")
+
         elif "{}.{}".format(lst_argm[0], lst_argm[1]) not in db:
             print("** no instance found **")
         else:
             print(db["{}.{}".format(lst_argm[0], lst_argm[1])])
 
-        # Extra case
-        # elif len(lst_argm) > 2:
-        #    print("** to many arguments **")
 
     def help_show(self):
         """
@@ -128,9 +132,11 @@ class HBNBCommand(cmd.Cmd):
             (save the change into the JSON file).
                 Ex: $ destroy BaseModel 1234-1234-1234
         """
+
         lst_argm = HBNBCommand.parse(arg)
         models.storage.reload()
         db = models.storage.all()
+
         if not len(lst_argm):
             print("** class name missing **")
         elif (lst_argm[0] not in HBNBCommand.__class_lst.keys()):
@@ -140,7 +146,6 @@ class HBNBCommand(cmd.Cmd):
         elif "{}.{}".format(lst_argm[0], lst_argm[1]) not in db:
             print("** no instance found **")
         else:
-            # print(storage.__class__.__name__.__objects)
             del db["{}.{}".format(lst_argm[0], lst_argm[1])]
             models.storage.save()
 
@@ -162,13 +167,13 @@ class HBNBCommand(cmd.Cmd):
         if len(list_argm) > 0 and list_argm[0] not in HBNBCommand.__class_lst:
             print("** class doesn't exist **")
         else:
-            objl = []
+            obj_a = []
             for obj in models.storage.all().values():
                 if len(list_argm) > 0 and list_argm[0] == obj.__class__.__name__:
-                    objl.append(obj.__str__())
+                    obj_a.append(obj.__str__())
                 elif len(list_argm) == 0:
-                    objl.append(obj.__str__())
-            print(objl)
+                    obj_a.append(obj.__str__())
+            print(obj_a)
 
     def help_all(self):
         """
@@ -182,8 +187,6 @@ class HBNBCommand(cmd.Cmd):
         """
             Updates an instance based on the class name and id by adding or
             updating attribute (save the change into the JSON file).
-                Ex: $ update BaseModel 1234-1234-1234 email
-                      "aibnb@holbertonschool.com"
         """
         list_argm = HBNBCommand.parse(arg)
         objdict = models.storage.all()
@@ -194,12 +197,14 @@ class HBNBCommand(cmd.Cmd):
         if list_argm[0] not in HBNBCommand.__class_lst:
             print("** class doesn't exist **")
             return False
+
         if len(list_argm) == 1:
             print("** instance id missing **")
             return False
         if "{}.{}".format(list_argm[0], list_argm[1]) not in objdict.keys():
             print("** no instance found **")
             return False
+
         if len(list_argm) == 2:
             print("** attribute name missing **")
             return False
@@ -209,13 +214,16 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** value missing **")
                 return False
+
         if len(list_argm) == 4:
             obj = objdict["{}.{}".format(list_argm[0], list_argm[1])]
+
             if list_argm[2] in obj.__class__.__dict__.keys():
                 valtype = type(obj.__class__.__dict__[list_argm[2]])
                 obj.__dict__[list_argm[2]] = valtype(list_argm[3])
             else:
                 obj.__dict__[list_argm[2]] = list_argm[3]
+
         elif type(eval(list_argm[2])) == dict:
             obj = objdict["{}.{}".format(list_argm[0], list_argm[1])]
             for k, v in eval(list_argm[2]).items():
@@ -225,6 +233,7 @@ class HBNBCommand(cmd.Cmd):
                     obj.__dict__[k] = valtype(v)
                 else:
                     obj.__dict__[k] = v
+
         models.storage.save()
 
     def help_update(self):
@@ -253,13 +262,14 @@ class HBNBCommand(cmd.Cmd):
         if len(list_argm) > 0 and list_argm[0] not in HBNBCommand.__class_lst:
             print("** class doesn't exist **")
         else:
-            objl = []
+            obj_a = []
             for obj in models.storage.all().values():
                 if len(list_argm) > 0 and list_argm[0] == obj.__class__.__name__:
-                    objl.append(obj.__str__())
+                    obj_a.append(obj.__str__())
                 elif len(list_argm) == 0:
-                    objl.append(obj.__str__())
-            print(len(objl))
+                    obj_a.append(obj.__str__())
+            print(len(obj_a))
+
 
 
 if __name__ == "__main__":
