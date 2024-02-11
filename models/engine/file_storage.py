@@ -9,7 +9,6 @@ from os.path import exists
 class FileStorage:
     """the Class for the FileStorage"""
 
-
     __file_path = "file.json"
     __objects = dict()
 
