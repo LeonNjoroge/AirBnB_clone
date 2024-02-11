@@ -265,6 +265,7 @@ class HBNBCommand(cmd.Cmd):
                     obj_a.append(obj.__str__())
             print(len(obj_a))
 
+
 if __name__ == "__main__":
     console = HBNBCommand()
     console.cmdloop()
