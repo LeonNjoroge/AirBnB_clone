@@ -13,6 +13,4 @@ class Amenity(BaseModel):
     name: string - empty string
 
     """
-
-
     name = ""
