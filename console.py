@@ -46,7 +46,6 @@ class HBNBCommand(cmd.Cmd):
 
         return nlist_argm
 
-
     def do_quit(self, arg):
         """Closes and exits the program"""
 
@@ -62,7 +61,6 @@ class HBNBCommand(cmd.Cmd):
 
         print("")
         return True
-
 
     def do_create(self, arg):
         """
@@ -115,7 +113,6 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         else:
             print(db["{}.{}".format(lst_argm[0], lst_argm[1])])
-
 
     def help_show(self):
         """
