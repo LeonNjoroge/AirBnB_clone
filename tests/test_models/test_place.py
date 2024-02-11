@@ -9,6 +9,7 @@ import time
 import unittest
 from datetime import datetime
 
+
 class TestPlace(unittest.TestCase):
     """this tests BaseModel"""
 

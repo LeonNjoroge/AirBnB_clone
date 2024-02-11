@@ -11,8 +11,6 @@ class Place(BaseModel):
     the public attributes has empty string,
     integer and float.
     """
-
-
     city_id = ""
     user_id = ""
     name = ""

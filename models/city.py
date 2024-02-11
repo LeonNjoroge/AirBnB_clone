@@ -12,7 +12,5 @@ class City(BaseModel):
     the public class attribute has empty strings
     with state_id and name
     """
-
-
     state_id = ""
     name = ""

@@ -12,6 +12,4 @@ class State(BaseModel):
     public class attributes
     name: string - empty string
     """
-
-
     name = ""

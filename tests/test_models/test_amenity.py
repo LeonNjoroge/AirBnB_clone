@@ -7,9 +7,9 @@ from models.amenity import Amenity
 import time
 import unittest
 
+
 class TestAmenity(unittest.TestCase):
     """test Amenity model"""
-
     def test_init(self):
         """test blank amenity init"""
         snap = datetime.now()
