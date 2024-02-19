@@ -26,22 +26,22 @@
     color: #ff5a5f;
     border: 4px solid #ff5a5f;
     border-radius: 50%;
+    align-items: center;
+    justify-content: center;
     min-width: 60px;
     height: 60px;
     font-size: 30px;
     margin-left: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .information {
     height: 80px;
     border-top: 1px solid #dddddd;
+    align-items: center;
     border-bottom: 1px solid #dddddd;
     width: 100%;
     display: flex;
     justify-content: space-around;
-    align-items: center     ;
 }
 .max_guest, .number_rooms, .number_bathrooms {
     display: flex;
@@ -55,10 +55,10 @@
 }
 div.container section.places article div.information div.max_guest div.guest_icon {
     background-image: url(../images/icon_group.png);
+    background-repeat: no-repeat;
     background-position: center;
     width: 50px;
-    height: 50px;
-    background-repeat: no-repeat;  
+    height: 50px;  
 }
 
 div.container section.places article div.information div.number_rooms div.rooms_icon {
@@ -71,10 +71,10 @@ div.container section.places article div.information div.number_rooms div.rooms_
 
 div.container section.places article div.information div.number_bathrooms div.bath_icon {
     background-image: url(../images/icon_bath.png);
+    background-repeat: no-repeat;
     background-position: center;
     width: 50px;
-    height: 50px;
-    background-repeat: no-repeat;  
+    height: 50px; 
 }
 article .amenities,
 article .reviews {

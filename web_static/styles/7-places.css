@@ -1,10 +1,10 @@
 .places {
     width: 100%;
     border: 0;
+    justify-content: center;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .places > h1 {
@@ -17,11 +17,11 @@
 .places > article {
     width: 390px;
     padding: 20px 20px 20px 20px;
+    display: flex;
+    justify-content: center;
     margin: 20px 20px 20px 20px;
     border: 1px solid #FF5A5F;
     border-radius: 4px;
-    display: flex;
-    justify-content: center;
 }
 
 .places > article > h2 {

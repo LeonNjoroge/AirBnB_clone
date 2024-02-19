@@ -27,23 +27,23 @@ div.container section.places article div.price_by_night {
     border: 4px #FF5A5F solid;
     border-radius: 100%;
     min-width: 60px;
+    align-items: center;
+    justify-content: center;
     height: 60px;
     font-size: 30px;
     margin-left: auto;
     margin-right: 20px;
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 div.container section.places article div.information {
     height: 80px;
     border-top: 1px #DDDDDD solid;
+    justify-content: center;
+    width: 100%;
     border-bottom: 1px #DDDDDD solid;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
 }
 
 div.container section.places article div.information div.max_guest {
@@ -66,10 +66,10 @@ div.container section.places article div.information div.max_guest div.guest_ico
 
 div.container section.places article div.information div.number_rooms div.rooms_icon {
     background-image: url(../images/icon_bed.png);
+    background-repeat: no-repeat;
     background-position: center;
     width: 50px;
     height: 50px;
-    background-repeat: no-repeat;  
 }
 
 div.container section.places article div.information div.number_bathrooms div.bath_icon {
